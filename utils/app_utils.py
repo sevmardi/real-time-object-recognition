@@ -77,6 +77,29 @@ class WebcamVideoStream:
         # indicate that the thread should be stopped
         self.stopped = True
 
+    def get_width(self):
+        pass
+
+    def get_height(self):
+        pass
+
+    def get_fps(self):
+        pass
+
+    def is_open(self):
+        pass
+
+    def set_frame_position(self):
+        pass
+
+    def get_frame_position(self):
+        pass
+
+    def get_frame_count(self):
+        pass
+
+
+
 
 def standard_colors():
     colors = [
