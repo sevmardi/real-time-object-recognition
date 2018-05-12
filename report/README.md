@@ -1,6 +1,6 @@
-#Report
+# Report
 
-##Abstract 
+## Abstract 
 ---------
 Recently, deep learning algorithm becomes a great solution for
 various field. Convolutional Neural Network (CNN), a kind of neural network,
@@ -65,7 +65,7 @@ Transform (SIFT) algorithm[1,2].
 
 
 
-##Future Work 
+## Future Work 
 ----------------
 Therer should be a future work somewhere here. 
 
