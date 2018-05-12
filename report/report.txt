@@ -19,7 +19,9 @@ data, and one of them is image/pictures. Images have a lot of information and is
 various system such as speed camera system on the road, license plate recognition
 system and Google image searching system.
 
-The race and progress in recent years towards object recognition and detection in still images was enabled by the creation of large-scale, publicly available data sets [9, 13, 14, 19, 32, 33, 34, 42, 52, 57]. These  data sets established challenging benchmarks to evaluate new methods for visual object recognition that have substantially improved the state-of-the-art across a broad range
+The race and progress in recent years towards object recognition and detection in still images was enabled by the creation of large-scale, 
+publicly available data sets [9, 13, 14, 19, 32, 33, 34, 42, 52, 57]. These  data sets established challenging benchmarks to evaluate new methods 
+for visual object recognition that have substantially improved the state-of-the-art across a broad range
 of computer vision tasks [20, 28, 46, 48, 49]. And so Object recognition in image is one of the interested study because object
 recognition means that the system can understand like human think. In other words,
 object recognition is related with field of Artificial Intelligence. Furthermore, growth
@@ -42,16 +44,23 @@ helps manage data.
 ## Related works
 ----------------
 Over the pas couple of year there has been made significant progress and researches that have tired for archiving object recognition
-in images or video live feed. Several papers have proposed way of using Scale Invariant Feature
-Transform (SIFT) algorithm[1,2]. Paper [1] suggested image recognition system with
-pyramidal descriptor adapted SIFT algorithm and paper [2] proposed image
+in images or video live feed. Several papers have proposed way of using Scale Invariant Feature Transform (SIFT) algorithm[1,2]. 
+Paper [1] suggested image recognition system with pyramidal descriptor adapted SIFT algorithm and paper [2] proposed image 
 recognition system for colorectal polyp histology with SIFT. Research [3] suggested persimmon growing monitoring system with
-analyzing image and paper [4] proposed image recognition system with three
-dimensional Speed Up Robust Feature (SURF) algorithm.
+analyzing image and paper [4] proposed image recognition system with three dimensional Speed Up Robust Feature (SURF) algorithm.
+We also stuided several recent papers which have proposed ways of using deep networks for locating class-specific or classagnostic 
+bounding boxes [4, 5, 6, 7]. In the OverFeat method [5], a fully-connected (fc) layer
+is trained to predict the box coordinates for the localization task that assumes a single object.
+The MultiBox methods [6, 7] generate region proposals from a network whose last fc layer simultaneously
+predicts multiple (e.g., 800) boxes, which are used for R-CNN [8] object detection. 
+However, their proposal network is applied on a single image or multiple large image crops (e.g., 224×224) [7]. We might quickly glimpse over this subject later in context with
+our method. Other shared computation of convolutions [9, 10, 11, 12] has been attracting increasing attention for efficient, yet accurate, visual recognition.
+The OverFeat paper [9] computes conv features from an
+image pyramid for classification, localization, and detection.
+Adaptively-sized pooling (SPP) [10] on shared conv feature maps is proposed for efficient region-based object detection [10, 13] and semantic
+segmentation [11]. Fast R-CNN [12] enables end-to-end detector training on shared conv features and
+shows compelling accuracy and speed.
 
-
-Several video data sets are already available to the com-
-munity.
 
 
 
@@ -91,4 +100,33 @@ colonoscopy. Gastrointestinal endoscopy 83.3 (2016): 643-649.
 [3]Chang, K.-C.: Design of persimmon growing stage monitoring system using image
 recognition technique. Consumer Electronics-Taiwan (ICCE-TW), 2016 IEEE
 International Conference on. IEEE, 2016.
+
+[4] C. Szegedy, A. Toshev, and D. Erhan. Deep neural networks for object detection. In NIPS, 2013.
+
+[5] P. Sermanet, D. Eigen, X. Zhang, M. Mathieu, R. Fergus, and Y. LeCun. Overfeat: Integrated recognition,
+localization and detection using convolutional networks. In ICLR, 2014.
+
+[6] D. Erhan, C. Szegedy, A. Toshev, and D. Anguelov. Scalable object detection using deep neural networks.
+In CVPR, 2014.
+
+[7] C. Szegedy, S. Reed, D. Erhan, and D. Anguelov. Scalable, high-quality object detection.
+arXiv:1412.1441v2, 2015.
+
+[8] R. Girshick, J. Donahue, T. Darrell, and J. Malik. Rich feature hierarchies for accurate object detection
+and semantic segmentation. In CVPR, 2014.
+
+[9] P. Sermanet, D. Eigen, X. Zhang, M. Mathieu, R. Fergus, and Y. LeCun. Overfeat: Integrated recognition,
+localization and detection using convolutional networks. In ICLR, 2014.
+
+[10] K. He, X. Zhang, S. Ren, and J. Sun. Spatial pyramid pooling in deep convolutional networks for visual
+recognition. In ECCV. 2014.
+
+[11] J. Dai, K. He, and J. Sun. Convolutional feature masking for joint object and stuff segmentation. In
+CVPR, 2015.
+
+[12] R. Girshick. Fast R-CNN. arXiv:1504.08083, 2015.
+
+[13] S. Ren, K. He, R. Girshick, X. Zhang, and J. Sun. Object detection networks on convolutional feature
+maps. arXiv:1504.06066, 2015. 
+
 
