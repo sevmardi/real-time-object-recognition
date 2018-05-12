@@ -2,12 +2,6 @@
 
 ## Abstract 
 ---------
-Recently, deep learning algorithm becomes a great solution for
-various field. Convolutional Neural Network (CNN), a kind of neural network,
-is known as suitable method for image processing. This paper proposes a real-
-time object recognition system with CNN. Since many images are needed for
-deep learning, this system contains image web crawler that collects images
-automatically. This paper will show high accuracy in object recognition.,We will also look into how to make use of these advancements with the help of tools such as TensorFlow, Keras and OpenCV. 
 
 
 ## Introduction 
