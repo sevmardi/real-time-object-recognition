@@ -63,7 +63,6 @@ shows compelling accuracy and speed.
 
 
 
-
 ## Methods 
 ----------
 
@@ -129,4 +128,10 @@ CVPR, 2015.
 [13] S. Ren, K. He, R. Girshick, X. Zhang, and J. Sun. Object detection networks on convolutional feature
 maps. arXiv:1504.06066, 2015. 
 
+[14] E. Real, J. Shlens, S. Mazzocchi, X. Pan, V. Vanhoucke.: YouTube-BoundingBoxes: A Large High-Precision 
+Human-Annotated Data Set for Object Detection in Video. arXiv:1702.00824
+
+
+[15] Robert J. Wang, Xiang Li, Shuang Ao, Charles X. Ling.: Pelee: A Real-Time Object Detection System 
+on Mobile Devices. arXiv:1804.06882
 
