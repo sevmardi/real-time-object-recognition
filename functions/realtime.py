@@ -7,19 +7,19 @@ from multiprocessing import Queue, Pool
 import cv2
 
 
-def real_time():
+def real_time(args):
     """
     Read and apply object detection to input real time system (webcam)
     """
 
     # If display is off while no number of frames limit has been define: set
     # diplay to on
-    if ((not args["display"]) & (args["num_frame"] < 0)):
+    if ((not args["display"]) & (args["num_frames"] < 0)):
         print("\nSet display to on\n")
         args["display"] = 1
 
     # Set the multiprocessing logger to debug if required
-    if args["Logger_debug"]:
+    if args["logger_debug"]:
         logger = multiprocessing.log_to_stderr()
         logger.setLevel(multiprocessing.SUBDEBUG)
 
