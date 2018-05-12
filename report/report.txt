@@ -43,8 +43,15 @@ helps manage data.
 ----------------
 Over the pas couple of year there has been made significant progress and researches that have tired for archiving object recognition
 in images or video live feed. Several papers have proposed way of using Scale Invariant Feature
-Transform (SIFT) algorithm[1,2].
+Transform (SIFT) algorithm[1,2]. Paper [1] suggested image recognition system with
+pyramidal descriptor adapted SIFT algorithm and paper [2] proposed image
+recognition system for colorectal polyp histology with SIFT. Research [3] suggested persimmon growing monitoring system with
+analyzing image and paper [4] proposed image recognition system with three
+dimensional Speed Up Robust Feature (SURF) algorithm.
 
+
+Several video data sets are already available to the com-
+munity.
 
 
 

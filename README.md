@@ -6,6 +6,9 @@ A real-time object recognition application using [Google's TensorFlow Object Det
 ## Requirements
 pip install -r requirments.txt
 
+## Report 
+
+See [report](report.txt) for details.
 
 ## Copyright
 See [LICENSE](LICENSE) for details.
