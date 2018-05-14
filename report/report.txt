@@ -14,23 +14,12 @@ various system such as speed camera system on the road, license plate recognitio
 system and Google image searching system.
 
 The race and progress in recent years towards object recognition and detection in still images was enabled by the creation of large-scale, 
-publicly available data sets [9, 13, 14, 19, 32, 33, 34, 42, 52, 57]. These  data sets established challenging benchmarks to evaluate new methods 
+publicly available data sets. These  data sets established challenging benchmarks to evaluate new methods 
 for visual object recognition that have substantially improved the state-of-the-art across a broad range
-of computer vision tasks [20, 28, 46, 48, 49]. And so Object recognition in image is one of the interested study because object
-recognition means that the system can understand like human think. In other words,
-object recognition is related with field of Artificial Intelligence. Furthermore, growth
-of deep learning algorithm accelerates object recognition system. Deep learning
-which is part of a machine learning is used in the many research and industry to help
-solve big data problems. It has various architectures such as Convolutional Deep
-Neural Networks (CNN). CNN, which is inspired by the organization of the visual
-cortex of animal, is the feed forward networks between its neurons. It can be used
-vision computing system, such as object recognition system. Deep learning algorithm
-with CNN can help analyze image data. It trains a lot of categorized images and helps recognition.
-
-However, categorizing data is by far the most important aspect before any intension of using it because
-usable and unusable data for purpose are mixed in the Internet. For this reason, there
-are increase of researches which is related with collecting data. Web crawling is one
-of the collecting method. Web crawler collects data with established category and
+of computer vision tasks. And so Object recognition in image is one of the interested study because object
+recognition means that the system can understand like human think. In other words, object recognition is related with field of Artificial Intelligence. 
+Furthermore, growth of deep learning algorithm accelerates object recognition system. Deep learning which is part of a machine learning is used in the many research and industry to help solve big data problems. It has various architectures such as Convolutional Deep Neural Networks (CNN). CNN, which is inspired by the organization of the visual cortex of animal, is the feed forward networks between its neurons. It can be used vision computing system, such as object recognition system. Deep learning algorithm with CNN can help analyze image data. It trains a lot of categorized images and helps recognition. However, categorizing data is by far the most important aspect before any intension of using it because usable and unusable data for purpose are mixed in the Internet. For this reason, there
+are increase of researches which is related with collecting data. Web crawling is one of the collecting method. Web crawler collects data with established category and
 helps manage data.
 
 
@@ -43,29 +32,121 @@ Paper [1] suggested image recognition system with pyramidal descriptor adapted S
 recognition system for colorectal polyp histology with SIFT. Research [3] suggested persimmon growing monitoring system with
 analyzing image and paper [4] proposed image recognition system with three dimensional Speed Up Robust Feature (SURF) algorithm.
 We also stuided several recent papers which have proposed ways of using deep networks for locating class-specific or classagnostic 
-bounding boxes [4, 5, 6, 7]. In the OverFeat method [5], a fully-connected (fc) layer
-is trained to predict the box coordinates for the localization task that assumes a single object.
-The MultiBox methods [6, 7] generate region proposals from a network whose last fc layer simultaneously
-predicts multiple (e.g., 800) boxes, which are used for R-CNN [8] object detection. 
-However, their proposal network is applied on a single image or multiple large image crops (e.g., 224×224) [7]. We might quickly glimpse over this subject later in context with
-our method. Other shared computation of convolutions [9, 10, 11, 12] has been attracting increasing attention for efficient, yet accurate, visual recognition.
-The OverFeat paper [9] computes conv features from an
-image pyramid for classification, localization, and detection.
+bounding boxes [4, 5, 6, 7]. In the OverFeat method [5], a fully-connected (fc) layer is trained to predict the box coordinates for 
+the localization task that assumes a single object. The MultiBox methods [6, 7] generate region proposals from a 
+network whose last fc layer simultaneously predicts multiple (e.g., 800) boxes, which are used for R-CNN [8] object detection. 
+However, their proposal network is applied on a single image or multiple large image crops (e.g., 224×224) [7]. We might quickly glimpse over this subject later in context within our methods and solutiuons section. Other shared computation of convolutions [9, 10, 11, 12] has been attracting increasing attention for efficient, yet accurate, visual recognition. The OverFeat paper [9] computes conv features from an image pyramid for classification, localization, and detection.
 Adaptively-sized pooling (SPP) [10] on shared conv feature maps is proposed for efficient region-based object detection [10, 13] and semantic
-segmentation [11]. Fast R-CNN [12] enables end-to-end detector training on shared conv features and
-shows compelling accuracy and speed.
+segmentation [11]. Fast R-CNN [12] enables end-to-end detector training on shared conv features and shows compelling accuracy and speed.
 
 
 
-## Methods 
-----------
+## Methods & Solutions
+----------------------
+
+### Image classification
+Image classification takes an image and predicts the object in an image. For example, when we built a cat-dog classifier, we took images of cat or dog and predicted their class:
+
+[Show image]
+
+The main question is what will actually happen when, let's say, dog and a cat present in the picture. What will the model predict? One of the abovious solutins to solve this problem is that we can train a multi-label classifier which will predict both the classes(dog as well as cat). However, we still won’t know the location of cat or dog. The problem of identifying the location of an object(given the class) in an image is called localization. However, if the object class is not known, we have to not only determine the location but also predict the class of each object.
+
+[show image]
+
+Predicting the location of the object along with the class is called object Detection. In place of predicting the class of object from an image, we now have to predict the class as well as a rectangle(called bounding box) containing that object. It takes 4 variables to uniquely identify a rectangle. So, for each instance of the object in the image, we shall predict following variables:
+
+class_name, 
+
+bounding_box_top_left_x_coordinate,
+
+bounding_box_top_left_y_coordinate,
+
+bounding_box_width,
+
+bounding_box_height
+
+Just like multi-label image classification problems, we can have multi-class object detection problem where we detect multiple kinds of objects in a single image. 
+
+In the following sub sections we will cover some of the popular methodologies to train object detectors.. Historically, there have been many approaches to object detection starting from Haar Cascades proposed by Viola and Jones in 2001. However, we shall be focussing on state-of-the-art methods all of which use neural networks and Deep Learning.
+
+Object Detection is modeled as a classification problem where we take windows of fixed sizes from input image at all the possible locations feed these patches to an image classifier. On an image each window of rectangle is fed to the classifier which predicts the class of the object in the window( or background if none is present). Hence, we know both the class and location of the objects in the image. But few problems start showing up in this case. Some of the problems is the size of the window so that it always contains the image. 
+
+[show image] 
+
+To solve this problem an image pyramid is created by scaling the image.Idea is that we resize the image at multiple scales and we count on the fact that our chosen window size will completely contain the object in one of these resized images. Most commonly, the image is downsampled(size is reduced) until certain condition typically a minimum size is reached. On each of these images, a fixed size window detector is run. It’s common to have as many as 64 levels on such pyramids. Now, all these windows are fed to a classifier to detect the object of interest. This will help us solve the problem of size and location.
+
+[show image]
+
+There are various methods for object detection like RCNN, Faster-RCNN, SSD. 
+
+
+#### Object Detection using Hog Features:
+One of groundbreaking papers ever published in computer vision world is by  Navneet Dalal and Bill Triggs introduced Histogram of Oriented Gradients(HOG) features in 2005. Hog features are computationally inexpensive and are good for many real-world problems. On each window obtained from running the sliding window on the pyramid, we calculate Hog Features which are fed to an SVM(Support vector machine) to create classifiers. We were able to run this in real time on videos for pedestrian detection, face detection, and so many other object detection use-cases.
+
+#### Region-based Convolutional Neural Networks(R-CNN):
+Since we had modeled object detection into a classification problem, success depends on the accuracy of classification.  After the rise of deep learning, the obvious idea was to replace HOG based classifiers with a more accurate convolutional neural network based classifier. However, there was one problem. CNNs were too slow and computationally very expensive. It was impossible to run CNNs on so many patches generated by sliding window detector. R-CNN solves this problem by using an object proposal algorithm called [Selective Search] which reduces the number of bounding boxes that are fed to the classifier to close to 2000 region proposals. Selective search uses local cues like texture, intensity, color and/or a measure of insideness etc to generate all the possible locations of the object. Now, we can feed these boxes to our CNN based classifier. It is also worth to note that a fully connected part of CNN takes a fixed sized input so we resize(without preserving aspect ratio) all the generated boxes to a fixed size (224×224 for VGG) and feed to the CNN part. Hence, there are 3 important parts of R-CNN:
+
+1- Run Selective Search to generate probable objects.
+2- Feed these patches to CNN, followed by SVM to predict the class of each patch.
+3- Optimize patches by training bounding box regression separately.
+
+
+#### Object recognition using Tensorflow Object detection API 
+Last year google released a object detection API using tensorflow. The very first release contains some pre-trained models (especially with a focus on light-weight models, so that they can run on mobile devices) which one could use this in conjunction with open-cv and recognize object in real-time using either your webcam or live videos. The codebase is an open-source framework built on top of TensorFlow that makes it easy to construct, train and deploy object detection models. The goals of this designing this system was to support state-of-the-art models while allowing for rapid exploration and research. The very release contains the following:
+
+Note: Some of the subjects below will be explained briefly in later sections in this paper. 
+
+A selection of trainable detection models, including:
+ - Single Shot Multibox Detector (SSD) with MobileNets
+ - SSD with Inception V2
+ - Region-Based Fully Convolutional Networks (R-FCN) with Resnet 101
+ - Faster RCNN with Resnet 101
+ - Faster RCNN with Inception Resnet v2
+
+Frozen weights (trained on the COCO dataset) for each of the above models to be used for out-of-the-box inference purposes.
+ - A Jupyter notebook for performing out-of-the-box inference with google's released models. 
+ - Convenient local training scripts as well as distributed training and evaluation pipelines via Google Cloud
+
+The SSD models that use MobileNet are lightweight, so that they can be comfortably run in real time on mobile devices. A winning COCO submission in 2016 used an ensemble of the Faster RCNN models, which are more computationally intensive but significantly more accurate.[16]
+
+#### Object detection Using Keras
+
+
+#### Faster-RCNN Model
+Faster R-CNN is an object detection algorithm proposed by Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun in 2015. The research paper is titled 'Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks'[12]. Faster R-CNN builds on previous work to efficiently classify object proposals using deep convolutional networks. Compared to previous work, Faster R-CNN employs a region proposal network (explained in a bit) and does not require an external method for candidate region proposals. 
+
+[show image]
 
 
 
-## Experimental results
+
+##### Region Proposal Networks (RPN)
+A Region Proposal Network (RPN) takes an image (of any size) as input and outputs a set of
+rectangular object proposals, each with an objectness score. This model is processed with a fully-convolutional network [14]
+
+
+
+
+
+#### YOLO
+
+
+
+
+
+
+
+
+
+## Experiments
 -----------------------
 
+### Datasets
 
+
+
+### Results 
+#### Using Tensorflow Object Detection API
 
 
 ## Conclusions 
@@ -82,7 +163,8 @@ Therer should be a future work somewhere here.
 
 
 
-## Ref
+## References
+----------------
 [1] Seidenari, L.: Local pyramidal descriptors for image recognition. IEEE transactions on
 pattern analysis and machine intelligence 36.5 (2014): 1033-1040.
 
@@ -125,7 +207,7 @@ maps. arXiv:1504.06066, 2015.
 [14] E. Real, J. Shlens, S. Mazzocchi, X. Pan, V. Vanhoucke.: YouTube-BoundingBoxes: A Large High-Precision 
 Human-Annotated Data Set for Object Detection in Video. arXiv:1702.00824
 
-
 [15] Robert J. Wang, Xiang Li, Shuang Ao, Charles X. Ling.: Pelee: A Real-Time Object Detection System 
 on Mobile Devices. arXiv:1804.06882
 
+[16] J. Huang, V. Rathod, C. Sun, M. Zhu, A. Korattikara, A. Fathi, I. Fischer, Z. Wojna, Y. Song, S. Guadarrama, K. Murphy.:Speed/accuracy trade-offs for modern convolutional object detectors. arXiv:1611.10012

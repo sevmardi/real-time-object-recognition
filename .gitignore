@@ -33,3 +33,7 @@ coverage.xml
 
 # Translations
 *.mo
+
+#movies
+*.mp4
+*.avi
