@@ -95,14 +95,30 @@ Given that RCNN was quite slow, mainly because running CNN on 2000 region propos
 
 Another challange is that we need to generate the fixed size of input for the fully connected layers of the CNN so, SPP introduces one more trick. It uses spatial pooling after the last convolutional layer as opposed to traditionally used max-pooling. SPP layer divides a region of any arbitrary size into a constant number of bins and max pool is performed on each of the bins. Since the number of bins remains the same, a constant size vector is produced as demonstrated in the figure below. 
 
-[show spp image]
+[show SPP image]
 
 One of the big drawbacks with SPP net, it was not trivial to perform back-propagation through spatial pooling layer. Hence, the network only fine-tuned the fully connected part of the network. SPP-Net paved the way for more popular Fast RCNN which we will see next.  
 
 ### Fast R-CNN:
-
+Fast RCNN uses the ideas from SPP-net and RCNN and fixes the key problem in SPP-net i.e. they made it possible to train end-to-end. To propagate the gradients through spatial pooling,  It uses a simple back-propagation calculation which is very similar to max-pooling gradient calculation with the exception that pooling regions overlap and therefore a cell can have gradients pumping in from multiple regions.
+One more thing that Fast RCNN did that they added the bounding box regression to the neural network training itself. So, now the network had two heads, classification head, and bounding box regression head. This multitask objective is a salient feature of Fast-rcnn as it no longer requires training of the network independently for classification and localization. These two changes reduce the overall training time and increase the accuracy in comparison to SPP net because of the end to end learning of CNN.
 
 ### Faster R-CNN: 
+Faster R-CNN is an object detection algorithm proposed by Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun in 2015. The research paper is titled 'Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks'[12]. Faster R-CNN builds on previous work to efficiently classify object proposals using deep convolutional networks. 
+
+[show image]
+
+The slowest part in fast R-CCN was Selective Search or Edge boxes. Compared to previous work, Faster R-CNN employs a region proposal network (explained in a bit) and does not require an external method for candidate region proposals. To handle the variations in aspect ratio and scale of objects, Faster R-CNN introduces the idea of anchor boxes. At each location, the original paper uses 3 kinds of anchor boxes for scale 128x 128, 256×256 and 512×512. Similarly, for aspect ratio, it uses three aspect ratios 1:1, 2:1 and 1:2. So, In total at each location, we have 9 boxes on which RPN predicts the probability of it being background or foreground. The varying sizes of bounding boxes can be passed further by apply Spatial Pooling just like Fast-RCNN. The remaining network is similar to Fast-RCNN. Faster-RCNN is 10 times faster than Fast-RCNN with similar accuracy of datasets like VOC-2007. That’s why Faster-RCNN has been one of the most accurate object detection algorithms. Here is a quick comparison between various versions of RCNN.
+
+[show image]
+
+
+
+##### Region Proposal Networks (RPN)
+A Region Proposal Network (RPN) takes an image (of any size) as input and outputs a set of
+rectangular object proposals, each with an objectness score. This model is processed with a fully-convolutional network [14]
+
+
 
 
 #### Object recognition using Tensorflow Object detection API 
@@ -125,29 +141,24 @@ The SSD models that use MobileNet are lightweight, so that they can be comfortab
 
 
 
-#### Object detection Using Keras
 
-
-
-
-
-#### Faster-RCNN Model
-Faster R-CNN is an object detection algorithm proposed by Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun in 2015. The research paper is titled 'Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks'[12]. Faster R-CNN builds on previous work to efficiently classify object proposals using deep convolutional networks. Compared to previous work, Faster R-CNN employs a region proposal network (explained in a bit) and does not require an external method for candidate region proposals. 
-
-[show image]
-
-
-
-
-##### Region Proposal Networks (RPN)
-A Region Proposal Network (RPN) takes an image (of any size) as input and outputs a set of
-rectangular object proposals, each with an objectness score. This model is processed with a fully-convolutional network [14]
-
-
-
+So far, all the methods discussed handled detection as a classification problem by building a pipeline where first object proposals are generated and then these proposals are send to classification/regression heads. However, there are a few methods that pose detection as a regression problem. Two of the most popular ones are YOLO and SSD. These detectors are also called single shot detectors. 
 
 
 #### YOLO
+A simple detection is a simple regression problem which takes an input image and learns the class probabilities and bounding box coordinates. The idea behind YOLO is that it divides each image into a grid of S x S and each grid predicts N bounding boxes and confidence. The confidence reflects the accuracy of the bounding box and whether the bounding box actually contains an object(regardless of class). YOLO also predicts the classification score for each box for every class in training. You can combine both the classes to calculate the probability of each class being present in a predicted box.
+
+So, total SxSxN boxes are predicted. However, most of these boxes have low confidence scores and if we set a threshold say 30% confidence, we can remove most of them as shown in the example below. 
+
+[show image]
+
+Notice that at runtime, we have run our image on CNN only once. Hence, YOLO is super fast and can be run real time. Another key difference is that YOLO sees the complete image at once as opposed to looking at only a generated region proposals in the previous methods. So, this contextual information helps in avoiding false positives. However, one limitation for YOLO is that it only predicts 1 type of class in one grid hence, it struggles with very small objects. 
+
+
+
+#### Single Shot Detector(SSD):
+Single Shot Detector achieves a good balance between speed and accuracy. SSD runs a convolutional network on input image only once and calculates a feature map. Now, we run a small 3×3 sized convolutional kernel on this feature map to predict the bounding boxes and classification probability. SSD also uses anchor boxes at various aspect ratio similar to Faster-RCNN and learns the off-set rather than learning the box. In order to handle the scale, SSD predicts bounding boxes after multiple convolutional layers. Since each convolutional layer operates at a different scale, it is able to detect objects of various scales. 
+
 
 
 
@@ -170,6 +181,22 @@ rectangular object proposals, each with an objectness score. This model is proce
 
 ## Conclusions 
 ---------------
+
+We discuesed lots of algorithms in the previsous sections. Currently, Faster-RCNN is the choice if you are fanatic about the accuracy numbers. However, if you are strapped for computation(probably running it on Nvidia Jetsons), SSD is a better recommendation. Finally, if accuracy is not too much of a concern but you want to go super fast, YOLO will be the way to go. First of all a visual understanding of speed vs accuracy trade-off:
+
+
+[show image]
+
+
+SSD seems to be a good choice as we are able to run it on a video and the accuracy trade-off is very little. However, it may not be that simple, look at this chart that compares the performance of SSD, YOLO, and Faster-RCNN on various sized objects. At large sizes, SSD seems to perform similarly to Faster-RCNN. However, look at the accuracy numbers when the object size is small, the gap widens.
+
+
+[show image]
+
+Choice of a right object detection method is crucial and depends on the problem you are trying to solve and the set-up. Object Detection is the backbone of many practical applications of computer vision such as autonomous cars, security and surveillance, and many industrial applications. Hopefully, this post gave you an intuition and understanding behind each of the popular algorithms for object detection.
+
+
+
 
 
 
