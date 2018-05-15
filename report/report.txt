@@ -17,11 +17,15 @@ The race and progress in recent years towards object recognition and detection i
 publicly available data sets. These  data sets established challenging benchmarks to evaluate new methods 
 for visual object recognition that have substantially improved the state-of-the-art across a broad range
 of computer vision tasks. And so Object recognition in image is one of the interested study because object
-recognition means that the system can understand like human think. In other words, object recognition is related with field of Artificial Intelligence. 
-Furthermore, growth of deep learning algorithm accelerates object recognition system. Deep learning which is part of a machine learning is used in the many research and industry to help solve big data problems. It has various architectures such as Convolutional Deep Neural Networks (CNN). CNN, which is inspired by the organization of the visual cortex of animal, is the feed forward networks between its neurons. It can be used vision computing system, such as object recognition system. Deep learning algorithm with CNN can help analyze image data. It trains a lot of categorized images and helps recognition. However, categorizing data is by far the most important aspect before any intension of using it because usable and unusable data for purpose are mixed in the Internet. For this reason, there
-are increase of researches which is related with collecting data. Web crawling is one of the collecting method. Web crawler collects data with established category and
-helps manage data.
+recognition means that the system can understand like human think. 
+In other words, object recognition is related with field of Artificial Intelligence. 
+Furthermore, growth of deep learning algorithm accelerates object recognition system. 
+Deep learning which is part of a machine learning is used in the many research and industry to help solve big data problems. 
+It has various architectures such as Convolutional Deep Neural Networks (CNN), R-CNN, Fast R-CNN, Faster R-CNN and many other approcahces. 
 
+Many networks or architectures are inspired by the organization of the visual cortex and images are fed forward networks between its neurons. It can be used vision computing system, such as object recognition system. 
+Deep learning algorithm with CNN, for instance, could help analyze image data. It trains a lot of categorized images and helps recognition. 
+In this paper we will discuss notable datasets and recent groundbreaking network architectures. We will also look into how to make use of these advancements with the help of tools such as OpenCV, Keras, TensorFlow and pre-trained models. 
 
 
 ## Related works
@@ -140,15 +144,12 @@ Frozen weights (trained on the COCO dataset) for each of the above models to be 
 The SSD models that use MobileNet are lightweight, so that they can be comfortably run in real time on mobile devices. A winning COCO submission in 2016 used an ensemble of the Faster RCNN models, which are more computationally intensive but significantly more accurate.[16]
 
 
-
-
 So far, all the methods discussed handled detection as a classification problem by building a pipeline where first object proposals are generated and then these proposals are send to classification/regression heads. However, there are a few methods that pose detection as a regression problem. Two of the most popular ones are YOLO and SSD. These detectors are also called single shot detectors. 
 
 
 #### YOLO
-A simple detection is a simple regression problem which takes an input image and learns the class probabilities and bounding box coordinates. The idea behind YOLO is that it divides each image into a grid of S x S and each grid predicts N bounding boxes and confidence. The confidence reflects the accuracy of the bounding box and whether the bounding box actually contains an object(regardless of class). YOLO also predicts the classification score for each box for every class in training. You can combine both the classes to calculate the probability of each class being present in a predicted box.
-
-So, total SxSxN boxes are predicted. However, most of these boxes have low confidence scores and if we set a threshold say 30% confidence, we can remove most of them as shown in the example below. 
+A simple detection is a simple regression problem which takes an input image and learns the class probabilities and bounding box coordinates. The idea behind YOLO is that it divides each image into a grid of S x S and each grid predicts N bounding boxes and confidence. The confidence reflects the accuracy of the bounding box and whether the bounding box actually contains an object(regardless of class). YOLO also predicts the classification score for each box for every class in training. You can combine both the classes to calculate the probability of each class being present in a predicted box.So, total SxSxN boxes are predicted. However, most of these boxes have low confidence scores and if we set a threshold say 30% confidence, 
+we can remove most of them as shown in the example below. 
 
 [show image]
 
@@ -172,7 +173,9 @@ Single Shot Detector achieves a good balance between speed and accuracy. SSD run
 -----------------------
 
 ### Datasets
+DONE
 
+#
 
 
 ### Results 
