@@ -147,7 +147,6 @@ Frozen weights (trained on the COCO dataset) for each of the above models to be 
 
 The SSD models that use MobileNet are lightweight, so that they can be comfortably run in real time on mobile devices. A winning COCO submission in 2016 used an ensemble of the Faster RCNN models, which are more computationally intensive but significantly more accurate.[16]
 
-
 So far, all the methods discussed handled detection as a classification problem by building a pipeline where first object proposals are generated and then these proposals are send to classification/regression heads. However, there are a few methods that pose detection as a regression problem. Two of the most popular ones are YOLO and SSD. These detectors are also called single shot detectors. 
 
 
@@ -277,8 +276,11 @@ SSD seems to be a good choice as we are able to run it on a video and the accura
 
 Choice of a right object detection method is crucial and depends on the problem you are trying to solve and the set-up. Object Detection is the backbone of many practical applications of computer vision such as autonomous cars, security and surveillance, and many industrial applications. Hopefully, this post gave you an intuition and understanding behind each of the popular algorithms for object detection.
 
-Most of the mistakes that faster-RCNN makes (of which there are very few) involve small objects in the background, many of which I can’t see without squinting. Some architecture frequently makes mistakes on cars, unless there are huge numbers of cars in the image. We also understood that Faster-RCNN is 9X slower at inference! Maybe We should time inference for more than one image and average, as this is higher than the authors claim.
-We certainly cannot do as much object detection as these architectures in the same amount of time, at least not consciously. One of the next steps would be to try different models (there are new 6 tensorflow models) and try to replicate the mAP vs inference time plot. One of the tips would be to try to track mAP during eval, rather than after freezing and also time inference on many images, not just one.
+
+\noindent Most of the mistakes that faster-RCNN makes involve not detecting small objects in the background, many of which we can’t see without squinting. None of the architectures make mistakes on cars, unless there are huge numbers of cars in the image. According to our research we also understood that Faster-RCNN is 9X slower at inference. 
+\noindent We certainly cannot do as much object detection as these architectures in the same amount of time, at least not consciously. One of the next steps would be to try different models (there are new 6 tensorflow models) and try to replicate the mAP vs inference time plot. One of the tips would be to try to track mAP during eval, rather than after freezing and also time inference on many images, not just one.\\
+
+
 
 
 ## References

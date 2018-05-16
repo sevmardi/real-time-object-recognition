@@ -8,7 +8,7 @@ pip install -r requirments.txt
 
 ## Report 
 
-See [report](https://github.com/sevmardi/real-time-object-recognition/blob/master/report/report.txt) for details.
+See [report](https://github.com/sevmardi/real-time-object-recognition/blob/master/report/report.pdf) for details.
 
 ## Copyright
 See [LICENSE](LICENSE) for details.
